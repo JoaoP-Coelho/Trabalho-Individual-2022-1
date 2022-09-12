@@ -50,6 +50,19 @@ services:
       - library_db
     networks:
       - app
+  
+  app_ngix:
+    imagine: nginx
+    ports: 80:80
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.nginx
+    depends_on:
+     - app
+     - library_db
+     - app_front
+    networks:
+     - app
 
 networks:
       app:

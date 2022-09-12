@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  library_db:
+    image: mdillon/postgis:11
+    restart: always
+    container_name: biblioteca-database
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=library_db
+    expose:
+      - 5432
+    ports:
+      - 5430:5432
+    networks:
+      - app      
+
+networks:
+      app:
+        driver: bridge

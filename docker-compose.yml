@@ -38,6 +38,18 @@ services:
       - library_db
     networks:
       - app
+  
+  app_front:
+    build:
+      context: ./library_front
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - app
+      - library_db
+    networks:
+      - app
 
 networks:
       app:

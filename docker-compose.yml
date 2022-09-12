@@ -16,6 +16,29 @@ services:
     networks:
       - app      
 
+  app:
+    build: 
+      context: library_back
+      dockerfile: Dockerfile
+    container_name: biblioteca-api
+    ports: 
+     - "8000:8000"
+    command: bash -c "
+      sleep 15 &&
+      python /app/manage.py makemigrations && 
+      python /app/manage.py migrate && 
+      python /app/manage.py runserver 0.0.0.0:8000"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=library_db
+      - POSTGRES_HOST=library_db
+      - POSTGRES_PORT=5432
+    depends_on:
+      - library_db
+    networks:
+      - app
+
 networks:
       app:
         driver: bridge

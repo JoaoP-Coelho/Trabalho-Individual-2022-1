@@ -1,0 +1,39 @@
+name: CI-backend 
+
+on:
+  push:
+    branches:
+     - main
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build library app
+      working-directory: library_back
+      run: docker build . --file Dockerfile --tag library-front:$(date +%s)
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v3
+     - name: Setting Python
+       uses: actions/setup-python@v1
+       with:
+        python-version: 3.8
+     - name: Install depdendencies
+       working-directory: library_back
+       run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+     - name: Testing Library backend
+       working-directory: library_back
+       run: |
+        python manage.py test
+       

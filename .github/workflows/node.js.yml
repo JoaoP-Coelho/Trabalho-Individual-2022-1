@@ -26,5 +26,5 @@ jobs:
         cache: 'npm'
     - working-directory: library_front
       run: | 
-        yarn --frozen-lockfile
+        yarn install
         yarn test
